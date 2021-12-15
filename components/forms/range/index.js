@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import './style.scss';
-
 const Range = ({
   id,
   defaultValue,
@@ -35,7 +33,7 @@ const Range = ({
     />
     {marks && (
       <div className="marks">
-        {marks.map(mark => (
+        {marks.map((mark) => (
           <span key={mark} data-label={mark} />
         ))}
       </div>

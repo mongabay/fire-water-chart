@@ -1,4 +1,4 @@
-@import 'css/settings';
+@use "sass:math";
 
 .c-radio {
   & .custom-control-input:checked {
@@ -17,8 +17,8 @@
       }
 
       &:after {
-        top: ($font-size-base * $line-height-base - $custom-control-indicator-size + rem(8)) / 2;
-        left: -($custom-control-gutter + $custom-control-indicator-size - rem(8) / 2);
+        top: math.div($font-size-base * $line-height-base - $custom-control-indicator-size + rem(8), 2);
+        left: -($custom-control-gutter + $custom-control-indicator-size - math.div(rem(8), 2));
         width: #{$custom-control-indicator-size - rem(8)};
         height: #{$custom-control-indicator-size - rem(8)};
         border-radius: $custom-radio-indicator-border-radius;

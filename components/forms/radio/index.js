@@ -1,8 +1,6 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
-import './style.scss';
-
 const Component = ({ id, name, disabled, checked, onChange, children, className }, ref) => (
   <div
     ref={ref}

@@ -1,8 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-import './style.scss';
-
 const Select = ({
   id,
   options,
@@ -15,8 +13,8 @@ const Select = ({
   required,
 }) => {
   const onChangeSelect = useCallback(
-    e => {
-      const option = options.find(option => option.value === e.target.selectedOptions[0].value);
+    (e) => {
+      const option = options.find((option) => option.value === e.target.selectedOptions[0].value);
       onChange(option);
     },
     [options, onChange]
@@ -33,7 +31,7 @@ const Select = ({
       onChange={onChangeSelect}
       required={required}
     >
-      {options.map(option => (
+      {options.map((option) => (
         <option key={option.value} value={option.value} disabled={option.disabled}>
           {option.label}
         </option>
