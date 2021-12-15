@@ -1,0 +1,70 @@
+.c-tool-visualization {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  overflow: hidden;
+
+  &.mode-2-vertical {
+  }
+
+  &.mode-2-horizontal {
+  }
+
+  &.mode-4 {
+  }
+
+  &.exporting {
+    .container-ratio {
+      border: none;
+    }
+  }
+
+  .exporting-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: $white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    z-index: 4;
+  }
+
+  .container-width {
+    // FIXME: next line assumes how the visualisation's layout outside of its parent
+    width: unquote('min(100%, calc((100vh - #{2* map-get($spacers, 5)}) * 1 / 0.6666))');
+  }
+
+  .container-ratio {
+    position: relative;
+    width: 100%;
+    padding-top: 66.66%;
+    overflow: hidden;
+  }
+
+  .map-container {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - #{rem(26)}); // The attributions are 26px high
+    background-color: $white;
+  }
+
+  .c-tool-attributions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: rem(26);
+    background-color: $white;
+  }
+}

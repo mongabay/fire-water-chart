@@ -1,0 +1,115 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import 'functions';
+
+// Colors
+
+$primary: #03755e;
+$light: $white;
+$yellow: #F1BA30;
+
+$text-color-1: #222222;
+$text-color-2: $primary;
+$text-color-3: #717171;
+
+$theme-colors: (
+  'primary': $primary,
+);
+
+$border-color-1: rgba($text-color-1, 0.3);
+
+// Body
+
+$body-bg: $white;
+$body-color: $text-color-1;
+
+$link-color: $text-color-2;
+$link-hover-color: darken($link-color, 15%);
+
+// Typography
+
+$font-family-1: 'Open Sans', serif;
+$font-family-2: 'Cardo', sans-serif;
+
+$font-family-base: $font-family-1;
+
+$font-size-l: rem(30);
+$font-size-base: rem(16);
+$font-size-s: rem(13);
+$font-size-xs: rem(12);
+$font-size-xxs: rem(10);
+
+$headings-font-family: $font-family-2;
+$h1-font-size: $font-size-l;
+
+// $mark-padding: 0 0.2rem;
+// $mark-bg: #fac080;
+
+// // Grid containers
+
+// $container-max-widths: (
+//   sm: 540px,
+//   md: 720px,
+//   lg: 960px,
+//   xl: 1040px,
+// );
+
+// Box shadows
+
+$box-shadow-1: 0 0 0 $input-btn-focus-width rgba($primary, 0.25);
+$box-shadow-2: rem(1) rem(1) rem(10) 0 rgba($black, 0.2);
+
+// Buttons
+
+$btn-padding-x: rem(20);
+$btn-padding-y-sm: rem(7.5); // A small button would have the height of an input
+
+$btn-border-radius: rem(22);
+$btn-border-radius-sm: rem(15);
+$btn-box-shadow: 0 rem(2) rem(3) 0 rgba($black, 0.15);
+$btn-font-weight: $font-weight-bold;
+
+// Forms
+
+$input-color: $text-color-1;
+$input-border-color: $border-color-1;
+$input-box-shadow: none;
+$input-focus-box-shadow: 0 0 0 $input-btn-focus-width rgba($primary, 0.25);
+$input-focus-border-color: $primary;
+
+$custom-select-color: $text-color-1;
+$custom-select-focus-border-color: $primary;
+$custom-select-focus-box-shadow: $input-focus-box-shadow;
+
+$custom-control-indicator-size: rem(20);
+$custom-control-indicator-border-color: $border-color-1;
+$custom-control-indicator-box-shadow: none;
+$custom-control-indicator-focus-border-color: $primary;
+$custom-control-indicator-active-bg: rgba($primary, 0.3);
+$custom-control-indicator-active-border-color: $primary;
+$custom-control-indicator-checked-bg: $white;
+$custom-control-indicator-checked-border-color: $primary;
+
+$custom-radio-indicator-icon-checked: none;
+
+$custom-checkbox-indicator-border-radius: rem(4);
+$custom-checkbox-indicator-icon-checked: none;
+
+$custom-select-box-shadow: none;
+$custom-select-border-color: $border-color-1;
+
+$custom-range-thumb-bg: $primary;
+$custom-range-thumb-active-bg: rgba($primary, 0.3);
+$custom-range-thumb-focus-box-shadow: 0 0 0 1px $body-bg, $input-focus-box-shadow;
+
+// Progress
+
+$progress-bg: rgba($primary, 0.3);
+$progress-bar-bg: $primary;
+$progress-height: rem(12);
+
+// Options
+
+$enable-shadows: true;
+$enable-responsive-font-sizes: true;

@@ -1,0 +1,60 @@
+.tippy-popper {
+  max-width: none !important;
+  z-index: 9 !important; // Needs to be below the z-index of the modal
+
+  div.tippy-tooltip {
+    max-width: none !important;
+  }
+
+  div.tippy-tooltip.light-theme {
+    padding: map-get($spacers, 3);
+    @include font-size($font-size-base);
+    line-height: inherit;
+    color: $body-color;
+    border-radius: rem(10);
+    background-color: $body-bg;
+    border: rem(1) solid $border-color-1;
+    box-shadow: rem(1) rem(1) rem(10) 0 rgba($black, 0.1);
+
+    &[data-placement^='top'] > .tippy-arrow {
+      border-top-color: $body-bg;
+
+      &:after {
+        position: absolute;
+        top: rem(-6);
+        left: rem(-7);
+        border: rem(7) solid transparent;
+        border-top-color: $border-color-1;
+        z-index: -1;
+        content: '';
+      }
+    }
+
+    &[data-placement^='bottom'] > .tippy-arrow {
+      border-bottom-color: $body-bg;
+    }
+
+    &[data-placement^='left'] > .tippy-arrow {
+      border-left-color: $body-bg;
+    }
+
+    &[data-placement^='right'] > .tippy-arrow {
+      border-right-color: $body-bg;
+
+      &:after {
+        position: absolute;
+        top: rem(-7);
+        left: rem(-8);
+        border: rem(7) solid transparent;
+        border-top-color: $border-color-1;
+        z-index: -1;
+        transform: rotate(90deg);
+        content: '';
+      }
+    }
+
+    .tippy-content {
+      padding: 0;
+    }
+  }
+}

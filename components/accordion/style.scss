@@ -1,0 +1,33 @@
+.c-accordion {
+  > .item {
+    > .title {
+      cursor: default;
+
+      .button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &[aria-expanded='false'] {
+          .c-icon {
+            transform: rotate(-90deg);
+            transform-origin: center;
+          }
+        }
+
+        .c-icon {
+          width: rem(15);
+          vertical-align: initial;
+
+          use {
+            stroke: currentColor;
+          }
+        }
+      }
+    }
+
+    > .panel {
+      margin: map-get($spacers, 2) 0;
+    }
+  }
+}

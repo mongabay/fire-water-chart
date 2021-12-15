@@ -1,0 +1,25 @@
+.c-tool-attributions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  @include font-size($font-size-xs);
+  font-style: italic;
+  color: $text-color-3;
+
+  svg {
+    display: block;
+    margin-right: map-get($spacers, 2);
+  }
+
+  span {
+    display: inline-block;
+    padding: map-get($spacers, 1) 0 map-get($spacers, 1) map-get($spacers, 1);
+
+    a {
+      color: currentColor;
+    }
+  }
+}
