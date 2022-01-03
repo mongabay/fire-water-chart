@@ -1,7 +1,7 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
 import routingReducer from 'modules/routing';
-import { mapReducer, exportReducer } from 'modules/tool';
+import { exportReducer } from 'modules/tool';
 import routes from 'lib/routes';
 
 const { pathname, query } =
@@ -11,7 +11,7 @@ const { pathname, query } =
     ? routes.match(location.href).parsedUrl
     : { pathname: '/', query: {} };
 
-export default configureStore({
+const store = configureStore({
   preloadedState: {
     // We want the initial state to contain the route info to later restore the state
     routing: {
@@ -21,7 +21,11 @@ export default configureStore({
   },
   reducer: combineReducers({
     routing: routingReducer,
-    map: mapReducer,
     export: exportReducer,
   }),
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+export default store;
