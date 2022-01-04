@@ -1,7 +1,7 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
 import routingReducer from 'modules/routing';
-import { exportReducer } from 'modules/tool';
+import { exportReducer, chartReducer } from 'modules/tool';
 import routes from 'lib/routes';
 
 const { pathname, query } =
@@ -22,6 +22,7 @@ const store = configureStore({
   reducer: combineReducers({
     routing: routingReducer,
     export: exportReducer,
+    chart: chartReducer,
   }),
 });
 

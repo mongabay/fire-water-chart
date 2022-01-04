@@ -1,9 +1,13 @@
-.c-tool-data-layers-settings {
+.c-tool-data-layer-settings {
   h2 {
     margin: 0 0 map-get($spacers, 3);
     font-family: $font-family-1;
     text-transform: uppercase;
     @include font-size($font-size-base);
     font-weight: $font-weight-bold;
+  }
+
+  .note {
+    @include font-size($font-size-s);
   }
 }

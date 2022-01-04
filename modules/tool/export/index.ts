@@ -24,7 +24,7 @@ interface ExportSliceInitialState {
   height: number;
 }
 
-const INITIAL_STATE: ExportSliceInitialState = {
+export const INITIAL_STATE: ExportSliceInitialState = {
   exporting: false,
   mode: '1',
   modeParams: {

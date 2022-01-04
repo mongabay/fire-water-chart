@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { Accordion, AccordionItem, AccordionTitle, AccordionPanel } from 'components/accordion';
 import Tooltip, { sticky } from 'components/tooltip';
 // import ExportTooltip from 'components/export-tooltip';
-import DataLayersSettings from '../data-layers-settings';
-import ContextualLayersSettings from '../contextual-layers-settings';
+import DataLayerSettings from '../data-layer-settings';
+import ChartComponentsSettings from '../chart-components-settings';
 import DownloadSuccessModal from '../download-success-modal';
 
 const Sidebar = ({ exporting, onClickPresets }) => {
-  const [expandedAccordion, setExpandedAccordion] = useState('data-layers');
+  const [expandedAccordion, setExpandedAccordion] = useState('data-layer');
   const [previousExporting, setPreviousExporting] = useState(false);
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
 
@@ -32,14 +32,14 @@ const Sidebar = ({ exporting, onClickPresets }) => {
         onChange={(uuids) => setExpandedAccordion(uuids[0] ?? null)}
       >
         <AccordionItem
-          id="data-layers"
-          className={expandedAccordion === 'data-layers' ? '-expanded' : null}
+          id="data-layer"
+          className={expandedAccordion === 'data-layer' ? '-expanded' : null}
         >
           <AccordionTitle aria-level={1}>
-            <span className="h1">Data layers</span>
+            <span className="h1">Data layer</span>
           </AccordionTitle>
           <AccordionPanel>
-            <DataLayersSettings />
+            <DataLayerSettings />
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem
@@ -47,10 +47,10 @@ const Sidebar = ({ exporting, onClickPresets }) => {
           className={expandedAccordion === 'contextual-layers' ? '-expanded' : null}
         >
           <AccordionTitle aria-level={1}>
-            <span className="h1">Contextual layers</span>
+            <span className="h1">Chart components</span>
           </AccordionTitle>
           <AccordionPanel>
-            <ContextualLayersSettings />
+            <ChartComponentsSettings />
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
