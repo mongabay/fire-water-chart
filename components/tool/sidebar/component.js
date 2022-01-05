@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Accordion, AccordionItem, AccordionTitle, AccordionPanel } from 'components/accordion';
 import Tooltip, { sticky } from 'components/tooltip';
-// import ExportTooltip from 'components/export-tooltip';
+import ExportTooltip from 'components/export-tooltip';
 import DataLayerSettings from '../data-layer-settings';
 import ChartComponentsSettings from '../chart-components-settings';
 import DownloadSuccessModal from '../download-success-modal';
@@ -55,8 +55,7 @@ const Sidebar = ({ exporting, onClickPresets }) => {
         </AccordionItem>
       </Accordion>
       <div className="mt-4">
-        <Tooltip sticky="popper" plugins={[sticky]} content={<div>Export tooltip content</div>}>
-          {/* <Tooltip sticky="popper" plugins={[sticky]} content={<ExportTooltip />}> */}
+        <Tooltip sticky="popper" plugins={[sticky]} content={<ExportTooltip />}>
           <button type="button" className="btn btn-primary mr-2">
             Export
           </button>

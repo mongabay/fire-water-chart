@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 
 import { exportSelectors } from 'modules/tool';
 import { useAppSelector } from 'hooks/redux';
@@ -11,14 +10,15 @@ const Attributions: React.FC<AttributionsProps> = ({}: AttributionsProps) => {
   return (
     <div className="c-tool-attributions">
       {exporting && (
-        <div className="logo">
-          <Image
-            src={`${process.env.BASE_PATH ?? ''}/images/mongabay-horizontal.jpg`}
-            alt="Mongabay"
-            width={135}
-            height={20}
-          />
-        </div>
+        // We can't use the `<Image />` component from Next.js here because it doesn't get exported
+        // correctly
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={`${process.env.BASE_PATH ?? ''}/images/mongabay-horizontal.jpg`}
+          alt="Mongabay"
+          width={135}
+          height={20}
+        />
       )}
       {!exporting && <div />}
       <div className="content">

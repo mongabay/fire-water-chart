@@ -6,14 +6,14 @@
   font-style: italic;
   color: $text-color-3;
 
-  .logo {
+  img {
     display: block;
+    height: rem(20);
     margin-right: map-get($spacers, 2);
   }
 
   .content {
     padding: map-get($spacers, 1) 0 map-get($spacers, 1) map-get($spacers, 1);
-    text-align: right;
 
     a {
       color: currentColor;

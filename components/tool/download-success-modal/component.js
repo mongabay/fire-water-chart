@@ -5,8 +5,13 @@ import Modal from 'components/modal';
 
 const ToolDownloadSuccessModal = ({ open, onClose }) => {
   return (
-    <Modal title="Map downloaded" open={open} onClose={onClose} className="c-tool-planet-modal">
-      <h1 className="mb-3">Map downloaded!</h1>
+    <Modal
+      title="Map downloaded"
+      open={open}
+      onClose={onClose}
+      className="c-tool-download-success-modal"
+    >
+      <h1 className="mb-3">Chart downloaded!</h1>
       <p>
         Check the{' '}
         <a
@@ -16,7 +21,7 @@ const ToolDownloadSuccessModal = ({ open, onClose }) => {
         >
           Mongabay Style Guidelines
         </a>{' '}
-        in case you need to add any further detail on your map.
+        in case you need to add any further detail on your chart.
       </p>
       <button type="button" className="btn btn-primary btn-block mt-4" onClick={onClose}>
         Close

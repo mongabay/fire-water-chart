@@ -1,12 +1,8 @@
-.tippy-popper {
-  max-width: none !important;
+[data-tippy-root] {
   z-index: 9 !important; // Needs to be below the z-index of the modal
 
-  div.tippy-tooltip {
+  .tippy-box[data-theme~="light"] {
     max-width: none !important;
-  }
-
-  div.tippy-tooltip.light-theme {
     padding: map-get($spacers, 3);
     @include font-size($font-size-base);
     line-height: inherit;
@@ -21,8 +17,8 @@
 
       &:after {
         position: absolute;
-        top: rem(-6);
-        left: rem(-7);
+        top: rem(17);
+        left: rem(1);
         border: rem(7) solid transparent;
         border-top-color: $border-color-1;
         z-index: -1;

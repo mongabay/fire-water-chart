@@ -6,7 +6,7 @@ import { ToolActionsType } from '../types';
 
 export const SLICE_NAME = 'export';
 
-interface ExportSliceInitialState {
+export interface ExportSliceInitialState {
   /** Whether the visualization is being exported */
   exporting: boolean;
   /** Current display mode/visualization layout */

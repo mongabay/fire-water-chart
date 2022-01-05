@@ -1,34 +1,6 @@
 export const IMAGE_SCALE = 2;
 
 /**
- * Wait (resolve) until a condition is met
- * @param {() => boolean} condition Condition that must be true to execute the callback
- * @param {number} [delay] Minimum initial delay before checking the condition (ms)
- */
-export const waitUntil = async (condition, delay) => {
-  const startWait = resolve => {
-    if (condition()) {
-      resolve();
-    } else {
-      const interval = setInterval(() => {
-        if (condition()) {
-          clearInterval(interval);
-          resolve();
-        }
-      }, 100);
-    }
-  };
-
-  return new Promise(resolve => {
-    if (delay) {
-      setTimeout(startWait, delay, resolve);
-    } else {
-      startWait(resolve);
-    }
-  });
-};
-
-/**
  * Generate the canvas frame of the visualization
  */
 export const generateCanvasFrame = async () => {
@@ -68,31 +40,4 @@ export const downloadImage = async () => {
   link.setAttribute('download', 'map.png');
   link.setAttribute('href', url);
   link.click();
-};
-
-/**
- * Download the animated image of the map
- * @param {HTMLCanvasElement[]} canvasFrames List of canvas frames
- * @param {number} duration Duration of the animation (s)
- */
-export const downloadAnimatedImage = async (canvasFrames, duration) => {
-  const GifJs = (await import('public/libs/gif-js/gif.js')).default;
-
-  const gif = new GifJs({
-    workerScript: '/libs/gif-js/gif.worker.js',
-  });
-
-  canvasFrames.forEach(frame =>
-    gif.addFrame(frame, { delay: (duration * 1000) / canvasFrames.length })
-  );
-
-  gif.on('finished', function(blob) {
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.setAttribute('download', 'map.gif');
-    link.setAttribute('href', url);
-    link.click();
-  });
-
-  gif.render();
 };
