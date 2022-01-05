@@ -8,7 +8,7 @@ import DataLayerSettings from '../data-layer-settings';
 import ChartComponentsSettings from '../chart-components-settings';
 import DownloadSuccessModal from '../download-success-modal';
 
-const Sidebar = ({ exporting, onClickPresets }) => {
+const Sidebar = ({ exporting }) => {
   const [expandedAccordion, setExpandedAccordion] = useState('data-layer');
   const [previousExporting, setPreviousExporting] = useState(false);
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
@@ -67,7 +67,6 @@ const Sidebar = ({ exporting, onClickPresets }) => {
 
 Sidebar.propTypes = {
   exporting: PropTypes.bool.isRequired,
-  onClickPresets: PropTypes.func.isRequired,
 };
 
 export default Sidebar;

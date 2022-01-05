@@ -11,17 +11,9 @@ export const Visualization = () => {
   const width = useAppSelector(exportSelectors.selectWidth);
   const height = useAppSelector(exportSelectors.selectHeight);
   const exporting = useAppSelector(exportSelectors.selectExporting);
-  const mode = useAppSelector(exportSelectors.selectMode);
-  const modeParams = useAppSelector(exportSelectors.selectModeParams);
 
   return (
-    <div
-      className={classnames([
-        'c-tool-visualization',
-        `mode-${mode}`,
-        `${exporting ? 'exporting' : ''}`,
-      ])}
-    >
+    <div className={classnames(['c-tool-visualization', `${exporting ? 'exporting' : ''}`])}>
       {exporting && <div className="exporting-message">Exporting...</div>}
       <div
         className="m-auto d-flex flex-column js-visualization"

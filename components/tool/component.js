@@ -5,9 +5,7 @@ import { Router } from 'lib/routes';
 import Sidebar from './sidebar';
 import Visualization from './visualization';
 
-import LoadingSpinner from 'components/loading-spinner';
-
-const Tool = ({ serializedState, restoring, restoreState }) => {
+const Tool = ({ serializedState, restoreState }) => {
   const [loading, setLoading] = useState(false);
 
   // When the component is mounted, we restore its state from the URL
@@ -28,20 +26,14 @@ const Tool = ({ serializedState, restoring, restoreState }) => {
 
   return (
     <div className="c-tool">
-      {(loading || restoring) && <LoadingSpinner />}
-      {!loading && !restoring && (
-        <>
-          <Sidebar />
-          <Visualization />
-        </>
-      )}
+      <Sidebar />
+      <Visualization />
     </div>
   );
 };
 
 Tool.propTypes = {
   serializedState: PropTypes.string.isRequired,
-  restoring: PropTypes.bool.isRequired,
   restoreState: PropTypes.func.isRequired,
 };
 
