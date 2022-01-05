@@ -31,8 +31,8 @@ export const INITIAL_STATE: ExportSliceInitialState = {
     difference: null,
     dates: [''],
   },
-  width: 900,
-  height: 600,
+  width: 480,
+  height: 480,
 };
 
 export const selectSettings = (state: RootState) => state[SLICE_NAME];

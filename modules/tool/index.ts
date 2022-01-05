@@ -36,12 +36,6 @@ const selectors = {
       })
   ),
   selectRestoring: createSelector([], () => null),
-  selectAttributions: createSelector(
-    [exportModule.selectMode, exportModule.selectModeParams],
-    (mode, modeParams) => {
-      return '';
-    }
-  ),
 };
 
 export const toolActions = actions;

@@ -6,7 +6,7 @@ import { ToolActionsType } from '../types';
 
 export const SLICE_NAME = 'chart';
 
-interface ChartSliceInitialState {
+export interface ChartSliceInitialState {
   /** ISO of the country */
   iso: string;
   /** ID of the region (the whole country if `null`) */

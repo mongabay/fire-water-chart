@@ -1,10 +1,10 @@
 .c-tool-visualization {
   position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   flex-grow: 1;
-  overflow: hidden;
+  overflow: auto;
 
   &.mode-2-vertical {
   }
@@ -13,12 +13,6 @@
   }
 
   &.mode-4 {
-  }
-
-  &.exporting {
-    .container-ratio {
-      border: none;
-    }
   }
 
   .exporting-message {
@@ -37,34 +31,21 @@
     z-index: 4;
   }
 
-  .container-width {
-    // FIXME: next line assumes how the visualisation's layout outside of its parent
-    width: unquote('min(100%, calc((100vh - #{2* map-get($spacers, 5)}) * 1 / 0.6666))');
-  }
-
-  .container-ratio {
-    position: relative;
-    width: 100%;
-    padding-top: 66.66%;
+  .chart-container {
+    flex-grow: 1;
+    /* The next two properties make sure that the chart will fit the area size defined by the
+    user */
+    flex-shrink: 1;
     overflow: hidden;
-  }
-
-  .map-container {
     display: flex;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: calc(100% - #{rem(26)}); // The attributions are 26px high
-    background-color: $white;
+    align-items: stretch;
+    padding: map-get($spacers, 4) map-get($spacers, 3);
+    border: rem(1) solid rgba($black, 0.1);
   }
 
   .c-tool-attributions {
-    position: absolute;
-    bottom: 0;
-    left: 0;
     width: 100%;
-    height: rem(26);
+    flex-shrink: 0;
     background-color: $white;
   }
 }

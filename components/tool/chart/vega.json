@@ -1,0 +1,340 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 430,
+  "height": 380,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "signals": [
+    {"name": "region", "value": "−"},
+    {"name": "show_value_axes", "value": true},
+    {"name": "show_time_axis", "value": true},
+    {"name": "show_header", "value": true},
+    {"name": "show_legend", "value": true},
+    {"name": "base_width", "value": 315},
+    {
+      "name": "responsive_font_factor",
+      "update": "clamp(width / base_width, 0.7, 1.3)"
+    },
+    {"name": "tick_count", "value": 8},
+    {"name": "header_height", "update": "54 * responsive_font_factor"},
+    {
+      "name": "legend_labels",
+      "value": [
+        "Fire alerts (1 week moving average)",
+        "Fire alerts (2 month moving average)",
+        "Precipitation (1 week moving average)",
+        "Precipitation (2 month moving average)"
+      ]
+    },
+    {
+      "name": "legend_colors",
+      "value": ["#D9443B", "#D9443B", "#5593E6", "#5593E6"]
+    },
+    {"name": "legend_opacities", "value": [1, 0.2, 1, 0.2]}
+  ],
+  "data": [
+    {
+      "name": "table",
+      "format": {"parse": {"date": "utc:'%Y-%m-%d'"}},
+      "values": []
+    },
+    {
+      "name": "stats",
+      "source": "table",
+      "transform": [
+        {
+          "type": "aggregate",
+          "fields": ["precipitation_w", "fire_w"],
+          "ops": ["max", "max"],
+          "as": ["precipitation_max", "fire_max"]
+        },
+        {
+          "type": "formula",
+          "as": "precipitation_domain",
+          "expr": "[0, datum.precipitation_max * 2]"
+        },
+        {
+          "type": "formula",
+          "as": "fire_domain",
+          "expr": "[0, datum.fire_max * 2]"
+        },
+        {
+          "type": "formula",
+          "as": "precipitation_discrete_domain_step",
+          "expr": "ceil(datum.precipitation_max / (tick_count / 2))"
+        },
+        {
+          "type": "formula",
+          "as": "precipitation_discrete_domain",
+          "expr": "reverse(sequence(0, datum.precipitation_discrete_domain_step * (tick_count + 1), datum.precipitation_discrete_domain_step))"
+        },
+        {
+          "type": "formula",
+          "as": "fire_discrete_domain_step",
+          "expr": "ceil(datum.fire_max / (tick_count / 2))"
+        },
+        {
+          "type": "formula",
+          "as": "fire_discrete_domain",
+          "expr": "reverse(sequence(0, datum.fire_discrete_domain_step * (tick_count + 1), datum.fire_discrete_domain_step))"
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "date",
+      "type": "utc",
+      "domain": {"data": "table", "field": "date"},
+      "range": "width"
+    },
+    {
+      "name": "precipitation",
+      "type": "linear",
+      "domain": {"signal": "data('stats')[0].precipitation_domain"},
+      "domainMax": {
+        "signal": "data('stats')[0].precipitation_discrete_domain_step * tick_count"
+      },
+      "range": "height",
+      "reverse": true
+    },
+    {
+      "name": "precipitation_discrete",
+      "type": "point",
+      "domain": {"signal": "data('stats')[0].precipitation_discrete_domain"},
+      "range": "height",
+      "reverse": true
+    },
+    {
+      "name": "fire",
+      "type": "linear",
+      "domain": {"signal": "data('stats')[0].fire_domain"},
+      "domainMax": {
+        "signal": "data('stats')[0].fire_discrete_domain_step * tick_count"
+      },
+      "range": "height"
+    },
+    {
+      "name": "fire_discrete",
+      "type": "point",
+      "domain": {"signal": "data('stats')[0].fire_discrete_domain"},
+      "range": "height"
+    },
+    {
+      "name": "legend_color",
+      "type": "ordinal",
+      "domain": {"signal": "legend_labels"},
+      "range": {"signal": "legend_colors"}
+    },
+    {
+      "name": "legend_opacity",
+      "type": "ordinal",
+      "domain": {"signal": "legend_labels"},
+      "range": {"signal": "legend_opacities"}
+    }
+  ],
+  "axes": [
+    {
+      "scale": "date",
+      "orient": "bottom",
+      "format": "%b"
+    },
+    {
+      "scale": "precipitation_discrete",
+      "orient": "left",
+      "title": "Precipitation (mm/day)"
+    },
+    {
+      "scale": "fire_discrete",
+      "orient": "right",
+      "title": "Fire alerts (counts)"
+    }
+  ],
+  "layout": {
+    "align": "all",
+    "titleBand": 0,
+    "headerBand": 0,
+    "padding": 0,
+    "offset": {"columnTitle": {"signal": "(show_header ? header_height : 0) - 2"}}
+  },
+  "marks": [
+    {
+      "type": "group",
+      "role": "column-title",
+      "encode": {
+        "enter": {
+          "width": {"signal": "width"},
+          "height": {"signal": "header_height"}
+        }
+      },
+      "marks": [
+        {
+          "type": "rect",
+          "encode": {
+            "enter": {
+              "x": {"value": 2.5},
+              "y": {"value": 0},
+              "width": {"signal": "width"},
+              "height": {"signal": "show_header ? header_height : 0"}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "opacity": {"signal": "show_header ? 1 : 0"},
+              "x": {"field": {"group": "width"}, "mult": 0.5},
+              "y": {"field": {"group": "height"}, "mult": 0.5},
+              "text": {"signal": "region"},
+              "limit": {"signal": "width - 56"},
+              "align": {"value": "center"},
+              "fontSize": {"signal": "16 * responsive_font_factor"},
+              "fontWeight": {"value": "700"}
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "enter": {
+              "opacity": {"signal": "show_header ? 1 : 0"},
+              "x": {"field": {"group": "width"}, "mult": 0.5},
+              "y": {"signal": "header_height - 10 * responsive_font_factor"},
+              "text": {
+                "signal": "'Time frame: ' + timeFormat(domain('date')[0], '%Y/%m/%d') + ' - ' + timeFormat(domain('date')[1], '%Y/%m/%d')"
+              },
+              "align": {"value": "center"},
+              "fontSize": {"signal": "10 * responsive_font_factor"}
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "marks": [
+        {
+          "type": "area",
+          "from": {"data": "table"},
+          "encode": {
+            "enter": {
+              "x": {"scale": "date", "field": "date"},
+              "y": {"scale": "precipitation", "field": "precipitation_2m"},
+              "y2": {"value": 0},
+              "fill": {"signal": "legend_colors[3]"},
+              "defined": {"signal": "isValid(datum['precipitation_2m'])"}
+            }
+          }
+        },
+        {
+          "type": "area",
+          "from": {"data": "table"},
+          "encode": {
+            "enter": {
+              "x": {"scale": "date", "field": "date"},
+              "y": {"scale": "fire", "field": "fire_2m"},
+              "y2": {"signal": "height"},
+              "fill": {"signal": "legend_colors[1]"},
+              "defined": {"signal": "isValid(datum['fire_2m'])"}
+            }
+          }
+        },
+        {
+          "type": "line",
+          "from": {"data": "table"},
+          "encode": {
+            "enter": {
+              "x": {"scale": "date", "field": "date"},
+              "y": {"scale": "precipitation", "field": "precipitation_w"},
+              "stroke": {"signal": "legend_colors[3]"},
+              "defined": {"signal": "isValid(datum['precipitation_w'])"}
+            }
+          }
+        },
+        {
+          "type": "line",
+          "from": {"data": "table"},
+          "encode": {
+            "enter": {
+              "x": {"scale": "date", "field": "date"},
+              "y": {"scale": "fire", "field": "fire_w"},
+              "stroke": {"signal": "legend_colors[1]"},
+              "defined": {"signal": "isValid(datum['fire_w'])"}
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "config": {
+    "background": "#ffffff",
+    "padding": {
+      "signal": "show_legend ? { 'bottom': 60} : {}"
+    },
+    "axis": {
+      "grid": true,
+      "gridDash": [2, 2],
+      "gridColor": "#CDCDCD",
+      "gridWidth": 0.5,
+      "ticks": false,
+      "domainColor": "#CDCDCD",
+      "titleFont": "Open Sans",
+      "titleFontSize": {"signal": "10 * responsive_font_factor"},
+      "titleFontWeight": "400",
+      "titlePadding": {"signal": "12 * responsive_font_factor"},
+      "labelColor": "#222222",
+      "labelFont": "Open Sans",
+      "labelFontSize": {"signal": "10 * responsive_font_factor"},
+      "labelOverlap": "parity",
+      "labelPadding": {"signal": "10 * responsive_font_factor"}
+    },
+    "axisY": {
+      "titleFontSize": {"signal": "show_value_axes ? 10 * responsive_font_factor : 0"},
+      "titlePadding": {"signal": "show_value_axes ? 12 * responsive_font_factor : 0"},
+      "labelPadding": {"signal": "6 * responsive_font_factor"}
+    },
+    "axisRight": {
+      "grid": false,
+      "titlePadding": {"signal": "show_value_axes ? 25 * responsive_font_factor : 0"},
+      "titleAngle": -90
+    },
+    "legend": {
+      "legendX": {"signal": "(show_value_axes ? -45 : 5) + (width < base_width ? 15 : 5)"},
+      "legendY": {"signal": "height + 20 + (show_time_axis ? 20 * responsive_font_factor : 0)"},
+      "padding": 2,
+      "labelLimit": {"signal": "(width + 100 * responsive_font_factor) / 2 - (28 * responsive_font_factor) / 2"},
+      "columns": 2,
+      "columnPadding": {"signal": "10 * responsive_font_factor"},
+      "rowPadding": {"signal": "8 * responsive_font_factor"},
+      "labelColor": "#222222",
+      "labelFont": "Open Sans",
+      "labelFontSize": {"signal": "show_value_axes ? 10 * responsive_font_factor : min(10 * responsive_font_factor, 10)"}
+    },
+    "rect": {
+      "stroke": "#CDCDCD",
+      "strokeWidth": 1,
+      "strokeOpacity": 1,
+      "fill": "none"
+    },
+    "text": {
+      "font": "Open Sans",
+      "fill": "#222"
+    },
+    "area": {
+      "fillOpacity": 0.2
+    },
+    "line": {
+      "strokeWidth": 2
+    }
+  },
+  "legends": [
+    {
+      "orient": "none",
+      "fill": "legend_color",
+      "opacity": "legend_opacity"
+    }
+  ]
+}
