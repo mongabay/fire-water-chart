@@ -7,6 +7,10 @@
     font-weight: $font-weight-bold;
   }
 
+  * + h2 {
+    margin-top: map-get($spacers, 4);
+  }
+
   .note {
     @include font-size($font-size-s);
   }
