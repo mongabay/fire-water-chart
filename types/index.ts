@@ -1,6 +1,7 @@
 export interface Country {
   iso: string;
   name: string;
+  partial_data: boolean;
 }
 
 export interface Region {

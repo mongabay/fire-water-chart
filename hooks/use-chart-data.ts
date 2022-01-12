@@ -11,7 +11,7 @@ export const useChartData = (date: string, countryIso: Country['iso'], regionId?
       },
       body: JSON.stringify({
         iso: countryIso,
-        adm1: regionId ?? '',
+        adm1: regionId ? +regionId : '',
         date_text: date,
       }),
     }).then((res) => res.json())

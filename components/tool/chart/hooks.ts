@@ -1,6 +1,7 @@
 import { Spec, InitSignal, ValuesData } from 'vega';
 import cloneDeep from 'lodash/cloneDeep';
 
+import { Country } from 'types';
 import { ChartSliceInitialState } from 'modules/tool/chart';
 import { useChartData } from 'hooks/use-chart-data';
 import { useCountryList } from 'hooks/use-country-list';
@@ -8,30 +9,24 @@ import { useRegionList } from 'hooks/use-region-list';
 import { UseChartTitle, UseChartSpec } from './types';
 import spec from './vega.json';
 
-export const useChartTitle = (iso: string, region: string | null): UseChartTitle => {
-  const countryList = useCountryList();
-  const regionList = useRegionList(iso);
+export const useChartTitle = (country: Country | null, region: string | null): UseChartTitle => {
+  const regionList = useRegionList(country);
 
-  if (
-    countryList.isError ||
-    countryList.isLoading ||
-    (region !== null && (regionList.isError || regionList.isError))
-  ) {
+  if (!country || (region !== null && (regionList.isError || regionList.isError))) {
     return null;
   }
 
-  const countryName = countryList.data?.find((d) => d.iso === iso);
   const regionName = region !== null ? regionList.data?.find((d) => d.id === region) : null;
 
-  if (!countryName || (region && !regionName)) {
+  if (region && !regionName) {
     return null;
   }
 
   if (!region) {
-    return countryName.name;
+    return country.name;
   }
 
-  return `${regionName?.name}, ${countryName.name}`;
+  return `${regionName?.name}, ${country.name}`;
 };
 
 export const useChartSpec = (
@@ -40,7 +35,10 @@ export const useChartSpec = (
   date: string,
   settings: ChartSliceInitialState['settings']
 ): UseChartSpec => {
-  const chartTitle = useChartTitle(iso, region);
+  const countryList = useCountryList();
+  const country = countryList.data?.find((d) => d.iso === iso) ?? null;
+
+  const chartTitle = useChartTitle(country, region);
   const chartData = useChartData(date, iso, region ?? undefined);
 
   const isLoading = !chartTitle || chartData.isLoading;

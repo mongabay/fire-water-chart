@@ -23,41 +23,48 @@ export const DataLayerSettings: React.FC<DataLayerSettingsProps> = ({}: DataLaye
   } = useCountryList();
 
   const countryList = useOptionList(countryListData ?? [], 'name', 'iso');
+  const country = countryListData?.find((d) => d.iso === iso);
 
   const {
     isLoading: isRegionListLoading,
     isError: isRegionListError,
     data: regionListData,
-  } = useRegionList(iso);
+  } = useRegionList(country);
 
   const regionList = useOptionList(regionListData ?? [], 'name', 'id', {
-    additionalOptions: [
-      {
-        label: 'Whole country',
-        value: '',
-      },
-    ],
+    additionalOptions:
+      !country || !country.partial_data
+        ? [
+            {
+              label: 'Whole country',
+              value: '',
+            },
+          ]
+        : undefined,
   });
 
   // Check if the iso exists in `countryListData` and set Brazil as a default otherwise
   useEffect(() => {
     if (!isCountryListLoading && !isCountryListError) {
-      const countryMatch = countryListData?.find((d) => d.iso === iso);
-      if (!countryMatch) {
+      if (!country) {
         dispatch(chartActions.updateIso(chartInitialState.iso));
       }
     }
-  }, [countryListData, isCountryListLoading, isCountryListError, iso, dispatch]);
+  }, [country, isCountryListLoading, isCountryListError, iso, dispatch]);
 
   // Check if the region exists in `regionListData` and set the whole country as a default otherwise
   useEffect(() => {
     if (!isRegionListLoading && !isRegionListError) {
       const regionMatch = regionListData?.find((d) => d.id === region);
       if (!regionMatch) {
-        dispatch(chartActions.updateRegion(null));
+        if (country?.partial_data) {
+          dispatch(chartActions.updateRegion(regionListData?.[0].id ?? null));
+        } else {
+          dispatch(chartActions.updateRegion(null));
+        }
       }
     }
-  }, [regionListData, isRegionListLoading, isRegionListError, region, dispatch]);
+  }, [regionListData, country, isRegionListLoading, isRegionListError, region, dispatch]);
 
   return (
     <form className="c-tool-data-layer-settings">
