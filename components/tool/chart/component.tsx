@@ -39,7 +39,8 @@ export const Chart: React.FC<ChartProps> = ({}: ChartProps) => {
   }, [chartSpec]);
 
   return (
-    <div ref={containerRef} className="c-tool-chart js-chart-container">
+    <div ref={containerRef} className="c-tool-chart">
+      {!chartSpec.isLoading && !chartSpec.isError && <div className="js-chart-container" />}
       {chartSpec.isLoading && <LoadingSpinner inner transparent />}
       {chartSpec.isError && (
         <p className="text-center">
