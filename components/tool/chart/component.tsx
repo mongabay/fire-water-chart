@@ -3,7 +3,6 @@ import { View, parse } from 'vega';
 
 import { chartSelectors } from 'modules/tool';
 import { useAppSelector } from 'hooks/redux';
-import { useChartData } from 'hooks/use-chart-data';
 import { ChartProps } from './types';
 import { useChartSpec } from './hooks';
 import LoadingSpinner from 'components/loading-spinner';

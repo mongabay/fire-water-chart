@@ -48,7 +48,7 @@ export const useChartSpec = (
   if (!isLoading && !isError) {
     data = cloneDeep(spec as Spec);
     (data.signals![0] as InitSignal).value = chartTitle;
-    (data.data![0] as ValuesData).values = chartData.data ?? [];
+    (data.data![0] as ValuesData).values = cloneDeep(chartData.data) ?? [];
 
     if (!settings.valueAxes) {
       (data.signals![1] as InitSignal).value = false;
