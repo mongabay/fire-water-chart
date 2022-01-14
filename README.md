@@ -22,4 +22,4 @@ You can access a hot-reloaded version of the app on [http://localhost:3000](http
 
 The application is built using [React](https://reactjs.org/) and the framework [Next.js](https://nextjs.org/). The styles use [Sass](https://sass-lang.com/) and the [Bootstrap](https://getbootstrap.com/) framework.
 
-A continuous deployment system is in place. Each time you push to the `master` branch, the application is deployed in GitHub Pages through a GitHub Action defined in `.github/workflows/build.yml`. You can see the status of the build in the “Actions” tab of the repository on GitHub.
+A continuous deployment system is in place. Each time you push to the `main` branch, the application is deployed in GitHub Pages through a GitHub Action defined in `.github/workflows/build.yml`. You can see the status of the build in the “Actions” tab of the repository on GitHub.
