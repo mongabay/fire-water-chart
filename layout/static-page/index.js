@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Image from 'next/image';
 
 import Head from 'components/head';
 import Icons from 'components/icons';
@@ -11,7 +10,7 @@ const StaticPage = ({ className, children }) => (
     <Head />
     <main className="l-static-page">
       <div className="logo">
-        <Image
+        <img // eslint-disable-line @next/next/no-img-element
           src={`${process.env.BASE_PATH ?? ''}/images/mongabay-horizontal.jpg`}
           alt="Mongabay"
           width={135}
