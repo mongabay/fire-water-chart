@@ -17,8 +17,6 @@ const actions: ToolActionsType = {
       return deserialize(query.state);
     }
   ),
-  updateMode: createAction('tool/updateMode'),
-  updateMapDifference: createAction('tool/updateMapDifference'),
 };
 
 // Slices belonging to the tool module
