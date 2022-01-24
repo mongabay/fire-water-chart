@@ -37,7 +37,7 @@ export const downloadImage = async () => {
 
   const url = canvas.toDataURL();
   const link = document.createElement('a');
-  link.setAttribute('download', 'map.png');
+  link.setAttribute('download', 'precipitation-drought-chart.png');
   link.setAttribute('href', url);
   link.click();
 };
