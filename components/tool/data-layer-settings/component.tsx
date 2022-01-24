@@ -123,7 +123,8 @@ export const DataLayerSettings: React.FC<DataLayerSettingsProps> = ({}: DataLaye
           aria-describedby="data-layer-date-note"
         />
         <div id="data-layer-date-note" className="form-text note">
-          The time frame automatically counts one year backwards from the date you select.
+          The time frame automatically counts one year backwards from the date you select. Some
+          recent data may be pending on availability.
         </div>
       </div>
       <fieldset className="form-group group-with-heading">
