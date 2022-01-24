@@ -57,8 +57,13 @@
         },
         {
           "type": "formula",
-          "as": "precipitation_discrete_domain",
+          "as": "value_discrete_domain",
           "expr": "reverse(sequence(0, datum.precipitation_discrete_domain_step * (tick_count + 1), datum.precipitation_discrete_domain_step))"
+        },
+        {
+          "type": "formula",
+          "as": "precipitation_discrete_domain",
+          "expr": "reverse(sequence(0, datum.precipitation_discrete_domain_step * ((tick_count / value_scale_factor) + 1), datum.precipitation_discrete_domain_step))"
         },
         {
           "type": "formula",
@@ -68,7 +73,7 @@
         {
           "type": "formula",
           "as": "fire_discrete_domain",
-          "expr": "reverse(sequence(0, datum.fire_discrete_domain_step * (tick_count + 1), datum.fire_discrete_domain_step))"
+          "expr": "reverse(sequence(0, datum.fire_discrete_domain_step * ((tick_count / value_scale_factor) + 1), datum.fire_discrete_domain_step))"
         }
       ]
     },
@@ -134,7 +139,7 @@
       "name": "precipitation_discrete",
       "type": "point",
       "domain": {"signal": "data('stats')[0].precipitation_discrete_domain"},
-      "range": "height",
+      "range": {"signal": "[0, height / tick_count * ceil(tick_count / value_scale_factor)]"},
       "reverse": true
     },
     {
@@ -150,7 +155,14 @@
       "name": "fire_discrete",
       "type": "point",
       "domain": {"signal": "data('stats')[0].fire_discrete_domain"},
-      "range": "height"
+      "range": {"signal": "[height - height / tick_count * ceil(tick_count / value_scale_factor), height]"}
+    },
+    {
+      "name": "value",
+      "type": "point",
+      "domain": {"signal": "data('stats')[0].value_discrete_domain"},
+      "range": "height",
+      "reverse": true
     },
     {
       "name": "legend_color",
@@ -172,14 +184,31 @@
       "format": "%b"
     },
     {
+      "scale": "value",
+      "orient": "left",
+      "labels": false
+    },
+    {
+      "scale": "precipitation",
+      "orient": "left",
+      "title": "Precipitation (mm/day)",
+      "labelOpacity": 0,
+      "grid": false
+    },
+    {
       "scale": "precipitation_discrete",
       "orient": "left",
-      "title": "Precipitation (mm/day)"
+      "grid": false
+    },
+    {
+      "scale": "fire",
+      "orient": "right",
+      "title": "Fire alerts (counts)",
+      "labelOpacity": 0
     },
     {
       "scale": "fire_discrete",
-      "orient": "right",
-      "title": "Fire alerts (counts)"
+      "orient": "right"
     }
   ],
   "layout": {
