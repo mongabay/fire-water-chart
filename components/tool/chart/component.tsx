@@ -11,6 +11,7 @@ export const Chart: React.FC<ChartProps> = ({}: ChartProps) => {
   const iso = useAppSelector(chartSelectors.selectIso);
   const region = useAppSelector(chartSelectors.selectRegion);
   const date = useAppSelector(chartSelectors.selectDate);
+  const unit = useAppSelector(chartSelectors.selectUnit);
   const oneWeekAverage = useAppSelector(chartSelectors.selectOneWeekAverage);
   const twoMonthAverage = useAppSelector(chartSelectors.selectTwoMonthAverage);
   const settings = useAppSelector(chartSelectors.selectSettings);
@@ -21,6 +22,7 @@ export const Chart: React.FC<ChartProps> = ({}: ChartProps) => {
     iso,
     region,
     date,
+    unit,
     oneWeekAverage,
     twoMonthAverage,
     settings

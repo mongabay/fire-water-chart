@@ -8,11 +8,13 @@ import { chartActions, chartSelectors, chartInitialState } from 'modules/tool';
 import { Select, Checkbox } from 'components/forms';
 import LoadingSpinner from 'components/loading-spinner';
 import { DataLayerSettingsProps } from './types';
+import { VALUE_UNIT_OPTIONS } from './constants';
 
 export const DataLayerSettings: React.FC<DataLayerSettingsProps> = ({}: DataLayerSettingsProps) => {
   const iso = useAppSelector(chartSelectors.selectIso);
   const region = useAppSelector(chartSelectors.selectRegion);
   const date = useAppSelector(chartSelectors.selectDate);
+  const unit = useAppSelector(chartSelectors.selectUnit);
   const oneWeekAverage = useAppSelector(chartSelectors.selectOneWeekAverage);
   const twoMonthAverage = useAppSelector(chartSelectors.selectTwoMonthAverage);
 
@@ -126,6 +128,18 @@ export const DataLayerSettings: React.FC<DataLayerSettingsProps> = ({}: DataLaye
           The time frame automatically counts one year backwards from the date you select. Some
           recent data may be pending on availability.
         </div>
+      </div>
+      <div className="form-group group-with-heading">
+        <label className="h2" htmlFor="data-layer-value-unit">
+          Value unit
+        </label>
+        <Select
+          id="data-layer-value-unit"
+          options={VALUE_UNIT_OPTIONS}
+          value={unit}
+          onChange={({ value }) => dispatch(chartActions.updateUnit(value))}
+          required
+        />
       </div>
       <fieldset className="form-group group-with-heading">
         <legend className="h2">Data aggregation</legend>

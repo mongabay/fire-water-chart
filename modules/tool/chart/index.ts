@@ -3,6 +3,7 @@ import omit from 'lodash/omit';
 
 import { RootState } from 'lib/store';
 import { ToolActionsType } from '../types';
+import { VALUE_UNIT } from 'components/tool/data-layer-settings/constants';
 
 export const SLICE_NAME = 'chart';
 
@@ -13,6 +14,8 @@ export interface ChartSliceInitialState {
   region: string | null;
   /** Date in the “YYYY-MM-DD” format */
   date: string;
+  /** The unit used on the chart */
+  unit: keyof typeof VALUE_UNIT;
   /** Whether the one-week moving average line is displayed */
   oneWeekAverage: boolean;
   /** Whether the two-month moving average line is displayed */
@@ -35,6 +38,7 @@ export const INITIAL_STATE: ChartSliceInitialState = {
   iso: 'BRA',
   region: null,
   date: new Date().toISOString().split('T')[0],
+  unit: 'Absolute',
   oneWeekAverage: true,
   twoMonthAverage: true,
   settings: {
@@ -50,6 +54,7 @@ export const selectChartSettings = (state: RootState) => state[SLICE_NAME];
 export const selectIso = createSelector([selectChartSettings], (settings) => settings.iso);
 export const selectRegion = createSelector([selectChartSettings], (settings) => settings.region);
 export const selectDate = createSelector([selectChartSettings], (settings) => settings.date);
+export const selectUnit = createSelector([selectChartSettings], (settings) => settings.unit);
 export const selectOneWeekAverage = createSelector(
   [selectChartSettings],
   (settings) => settings.oneWeekAverage
@@ -81,6 +86,9 @@ const createExportSlice = (toolActions: ToolActionsType) =>
       },
       updateDate(state, action: PayloadAction<string>) {
         state.date = action.payload;
+      },
+      updateUnit(state, action: PayloadAction<keyof typeof VALUE_UNIT>) {
+        state.unit = action.payload;
       },
       updateOneWeekAverage(state, action: PayloadAction<boolean>) {
         state.oneWeekAverage = action.payload;

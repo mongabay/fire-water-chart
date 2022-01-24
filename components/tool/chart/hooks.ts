@@ -8,6 +8,7 @@ import { useCountryList } from 'hooks/use-country-list';
 import { useRegionList } from 'hooks/use-region-list';
 import { UseChartTitle, UseChartSpec } from './types';
 import spec from './vega.json';
+import { VALUE_UNIT } from '../data-layer-settings/constants';
 
 export const useChartTitle = (country: Country | null, region: string | null): UseChartTitle => {
   const regionList = useRegionList(country);
@@ -33,6 +34,7 @@ export const useChartSpec = (
   iso: string,
   region: string | null,
   date: string,
+  unit: keyof typeof VALUE_UNIT,
   oneWeekAverage: boolean,
   twoMonthAverage: boolean,
   settings: ChartSliceInitialState['settings']
@@ -51,6 +53,10 @@ export const useChartSpec = (
     data = cloneDeep(spec as Spec);
     (data.signals![0] as InitSignal).value = chartTitle;
     (data.data![0] as ValuesData).values = cloneDeep(chartData.data) ?? [];
+
+    if (unit === 'Percentage') {
+      (data.signals![5] as InitSignal).value = true;
+    }
 
     if (!oneWeekAverage) {
       (data.signals![6] as InitSignal).value = false;
