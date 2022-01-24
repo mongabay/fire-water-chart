@@ -1,5 +1,5 @@
 .c-tool-data-layer-settings {
-  h2 {
+  h2, .h2 {
     margin: 0 0 map-get($spacers, 3);
     font-family: $font-family-1;
     text-transform: uppercase;
@@ -7,7 +7,7 @@
     font-weight: $font-weight-bold;
   }
 
-  * + h2 {
+  * + h2, * + .h2, .group-with-heading {
     margin-top: map-get($spacers, 4);
   }
 

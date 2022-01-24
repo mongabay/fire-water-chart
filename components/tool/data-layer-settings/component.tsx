@@ -4,8 +4,8 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { useCountryList } from 'hooks/use-country-list';
 import { useOptionList } from 'hooks/use-option-list';
 import { useRegionList } from 'hooks/use-region-list';
-import { chartActions, chartSelectors, chartReducer, chartInitialState } from 'modules/tool';
-import { Select } from 'components/forms';
+import { chartActions, chartSelectors, chartInitialState } from 'modules/tool';
+import { Select, Checkbox } from 'components/forms';
 import LoadingSpinner from 'components/loading-spinner';
 import { DataLayerSettingsProps } from './types';
 
@@ -13,6 +13,8 @@ export const DataLayerSettings: React.FC<DataLayerSettingsProps> = ({}: DataLaye
   const iso = useAppSelector(chartSelectors.selectIso);
   const region = useAppSelector(chartSelectors.selectRegion);
   const date = useAppSelector(chartSelectors.selectDate);
+  const oneWeekAverage = useAppSelector(chartSelectors.selectOneWeekAverage);
+  const twoMonthAverage = useAppSelector(chartSelectors.selectTwoMonthAverage);
 
   const dispatch = useAppDispatch();
 
@@ -124,6 +126,25 @@ export const DataLayerSettings: React.FC<DataLayerSettingsProps> = ({}: DataLaye
           The time frame automatically counts one year backwards from the date you select.
         </div>
       </div>
+      <fieldset className="form-group group-with-heading">
+        <legend className="h2">Data aggregation</legend>
+        <Checkbox
+          id="data-layer-value-unit-one-week"
+          name="data-layer-value-unit"
+          checked={oneWeekAverage}
+          onChange={() => dispatch(chartActions.updateOneWeekAverage(!oneWeekAverage))}
+        >
+          One-week moving average
+        </Checkbox>
+        <Checkbox
+          id="data-layer-value-unit-two-month"
+          name="data-layer-value-unit"
+          checked={twoMonthAverage}
+          onChange={() => dispatch(chartActions.updateTwoMonthAverage(!twoMonthAverage))}
+        >
+          Two-month moving average
+        </Checkbox>
+      </fieldset>
     </form>
   );
 };

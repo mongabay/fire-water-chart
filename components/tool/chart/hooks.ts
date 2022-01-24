@@ -1,4 +1,4 @@
-import { Spec, InitSignal, ValuesData } from 'vega';
+import { Spec, InitSignal, ValuesData, GroupMark } from 'vega';
 import cloneDeep from 'lodash/cloneDeep';
 
 import { Country } from 'types';
@@ -33,6 +33,8 @@ export const useChartSpec = (
   iso: string,
   region: string | null,
   date: string,
+  oneWeekAverage: boolean,
+  twoMonthAverage: boolean,
   settings: ChartSliceInitialState['settings']
 ): UseChartSpec => {
   const countryList = useCountryList();
@@ -49,6 +51,20 @@ export const useChartSpec = (
     data = cloneDeep(spec as Spec);
     (data.signals![0] as InitSignal).value = chartTitle;
     (data.data![0] as ValuesData).values = cloneDeep(chartData.data) ?? [];
+
+    if (!oneWeekAverage) {
+      (data.signals![6] as InitSignal).value = false;
+      (data.marks![1] as GroupMark).marks = (data.marks![1] as GroupMark).marks!.filter(
+        (mark) => mark.type !== 'line'
+      );
+    }
+
+    if (!twoMonthAverage) {
+      (data.signals![7] as InitSignal).value = false;
+      (data.marks![1] as GroupMark).marks = (data.marks![1] as GroupMark).marks!.filter(
+        (mark) => mark.type !== 'area'
+      );
+    }
 
     if (!settings.valueAxes) {
       (data.signals![1] as InitSignal).value = false;

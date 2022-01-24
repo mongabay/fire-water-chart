@@ -12,27 +12,16 @@
     {"name": "show_time_axis", "value": true},
     {"name": "show_header", "value": true},
     {"name": "show_legend", "value": true},
+    {"name": "show_percentage_values", "value": "false"},
+    {"name": "show_one_week_average", "value": "true"},
+    {"name": "show_two_month_average", "value": "true"},
     {"name": "base_width", "value": 315},
     {
       "name": "responsive_font_factor",
       "update": "clamp(width / base_width, 0.7, 1.3)"
     },
     {"name": "tick_count", "value": 8},
-    {"name": "header_height", "update": "54 * responsive_font_factor"},
-    {
-      "name": "legend_labels",
-      "value": [
-        "Fire alerts (1 week moving average)",
-        "Fire alerts (2 month moving average)",
-        "Precipitation (1 week moving average)",
-        "Precipitation (2 month moving average)"
-      ]
-    },
-    {
-      "name": "legend_colors",
-      "value": ["#D9443B", "#D9443B", "#5593E6", "#5593E6"]
-    },
-    {"name": "legend_opacities", "value": [1, 0.2, 1, 0.2]}
+    {"name": "header_height", "update": "54 * responsive_font_factor"}
   ],
   "data": [
     {
@@ -46,24 +35,24 @@
       "transform": [
         {
           "type": "aggregate",
-          "fields": ["precipitation_w", "fire_w"],
-          "ops": ["max", "max"],
-          "as": ["precipitation_max", "fire_max"]
+          "fields": ["precipitation_w", "fire_w", "precipitation_2m", "fire_2m"],
+          "ops": ["max", "max", "max", "max"],
+          "as": ["precipitation_w_max", "fire_w_max", "precipitation_2m_max", "fire_2m_max"]
         },
         {
           "type": "formula",
           "as": "precipitation_domain",
-          "expr": "[0, datum.precipitation_max * 2]"
+          "expr": "[0, (show_one_week_average ? datum.precipitation_w_max : datum.precipitation_2m_max) * 2]"
         },
         {
           "type": "formula",
           "as": "fire_domain",
-          "expr": "[0, datum.fire_max * 2]"
+          "expr": "[0, (show_one_week_average ? datum.fire_w_max : datum.fire_2m_max) * 2]"
         },
         {
           "type": "formula",
           "as": "precipitation_discrete_domain_step",
-          "expr": "ceil(datum.precipitation_max / (tick_count / 2))"
+          "expr": "ceil((show_one_week_average ? datum.precipitation_w_max : datum.precipitation_2m_max) / (tick_count / 2))"
         },
         {
           "type": "formula",
@@ -73,12 +62,52 @@
         {
           "type": "formula",
           "as": "fire_discrete_domain_step",
-          "expr": "ceil(datum.fire_max / (tick_count / 2))"
+          "expr": "ceil((show_one_week_average ? datum.fire_w_max : datum.fire_2m_max) / (tick_count / 2))"
         },
         {
           "type": "formula",
           "as": "fire_discrete_domain",
           "expr": "reverse(sequence(0, datum.fire_discrete_domain_step * (tick_count + 1), datum.fire_discrete_domain_step))"
+        }
+      ]
+    },
+    {
+      "name": "legend",
+      "values": [
+        {
+          "name": "Fire alerts (1-week moving average)",
+          "color": "#D9443B",
+          "opacity": 1,
+          "span": "week"
+        },
+        {
+          "name": "Fire alerts (2-month moving average)",
+          "color": "#D9443B",
+          "opacity": 0.2,
+          "span": "month"
+        },
+        {
+          "name": "Precipitation (1-week moving average)",
+          "color": "#5593E6",
+          "opacity": 1,
+          "span": "week"
+        },
+        {
+          "name": "Precipitation (2-month moving average)",
+          "color": "#5593E6",
+          "opacity": 0.2,
+          "span": "month"
+        }
+      ],
+      "transform": [
+        {
+          "type": "formula",
+          "as": "opacity",
+          "expr": "show_one_week_average ? datum.opacity : 1"
+        },
+        {
+          "type": "filter",
+          "expr": "(datum.span === 'week' && show_one_week_average) || (datum.span === 'month' && show_two_month_average)"
         }
       ]
     }
@@ -125,14 +154,14 @@
     {
       "name": "legend_color",
       "type": "ordinal",
-      "domain": {"signal": "legend_labels"},
-      "range": {"signal": "legend_colors"}
+      "domain": {"signal": "pluck(data('legend'), 'name')"},
+      "range": {"signal": "pluck(data('legend'), 'color')"}
     },
     {
       "name": "legend_opacity",
       "type": "ordinal",
-      "domain": {"signal": "legend_labels"},
-      "range": {"signal": "legend_opacities"}
+      "domain": {"data": "legend", "field": "name"},
+      "range": {"data": "legend", "field": "opacity"}
     }
   ],
   "axes": [
@@ -174,8 +203,8 @@
           "type": "rect",
           "encode": {
             "enter": {
-              "x": {"value": 2.5},
-              "y": {"value": 0},
+              "x": {"signal": "show_one_week_average ? 2.5 : 0.5"},
+              "y": {"value": -2.5},
               "width": {"signal": "width"},
               "height": {"signal": "show_header ? header_height : 0"}
             }
@@ -186,7 +215,7 @@
           "encode": {
             "enter": {
               "opacity": {"signal": "show_header ? 1 : 0"},
-              "x": {"field": {"group": "width"}, "mult": 0.5},
+              "x": {"signal": "width * 0.5 + (show_one_week_average ? 0 : -2)"},
               "y": {"field": {"group": "height"}, "mult": 0.5},
               "text": {"signal": "region"},
               "limit": {"signal": "width - 56"},
@@ -201,7 +230,7 @@
           "encode": {
             "enter": {
               "opacity": {"signal": "show_header ? 1 : 0"},
-              "x": {"field": {"group": "width"}, "mult": 0.5},
+              "x": {"signal": "width * 0.5 + (show_one_week_average ? 0 : -2)"},
               "y": {"signal": "header_height - 10 * responsive_font_factor"},
               "text": {
                 "signal": "'Time frame: ' + timeFormat(domain('date')[0], '%Y/%m/%d') + ' - ' + timeFormat(domain('date')[1], '%Y/%m/%d')"
@@ -224,7 +253,7 @@
               "x": {"scale": "date", "field": "date"},
               "y": {"scale": "precipitation", "field": "precipitation_2m"},
               "y2": {"value": 0},
-              "fill": {"signal": "legend_colors[3]"},
+              "fill": {"signal": "peek(range('legend_color'))"},
               "defined": {"signal": "isValid(datum['precipitation_2m'])"}
             }
           }
@@ -237,7 +266,7 @@
               "x": {"scale": "date", "field": "date"},
               "y": {"scale": "fire", "field": "fire_2m"},
               "y2": {"signal": "height"},
-              "fill": {"signal": "legend_colors[1]"},
+              "fill": {"signal": "range('legend_color')[0]"},
               "defined": {"signal": "isValid(datum['fire_2m'])"}
             }
           }
@@ -249,7 +278,7 @@
             "enter": {
               "x": {"scale": "date", "field": "date"},
               "y": {"scale": "precipitation", "field": "precipitation_w"},
-              "stroke": {"signal": "legend_colors[3]"},
+              "stroke": {"signal": "peek(range('legend_color'))"},
               "defined": {"signal": "isValid(datum['precipitation_w'])"}
             }
           }
@@ -261,7 +290,7 @@
             "enter": {
               "x": {"scale": "date", "field": "date"},
               "y": {"scale": "fire", "field": "fire_w"},
-              "stroke": {"signal": "legend_colors[1]"},
+              "stroke": {"signal": "range('legend_color')[0]"},
               "defined": {"signal": "isValid(datum['fire_w'])"}
             }
           }
@@ -272,7 +301,7 @@
   "config": {
     "background": "#ffffff",
     "padding": {
-      "signal": "show_legend ? { 'bottom': 60} : {}"
+      "signal": "show_legend ? { 'bottom': show_one_week_average && show_two_month_average ? 60 : (20 + 15 * responsive_font_factor) } : {}"
     },
     "axis": {
       "grid": true,
@@ -324,7 +353,7 @@
       "fill": "#222"
     },
     "area": {
-      "fillOpacity": 0.2
+      "fillOpacity": {"signal": "show_one_week_average ? 0.2 : 1"}
     },
     "line": {
       "strokeWidth": 2

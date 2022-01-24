@@ -13,6 +13,10 @@ export interface ChartSliceInitialState {
   region: string | null;
   /** Date in the “YYYY-MM-DD” format */
   date: string;
+  /** Whether the one-week moving average line is displayed */
+  oneWeekAverage: boolean;
+  /** Whether the two-month moving average line is displayed */
+  twoMonthAverage: boolean;
   settings: {
     /** Whether the value axes are displayed */
     valueAxes: boolean;
@@ -31,6 +35,8 @@ export const INITIAL_STATE: ChartSliceInitialState = {
   iso: 'BRA',
   region: null,
   date: new Date().toISOString().split('T')[0],
+  oneWeekAverage: true,
+  twoMonthAverage: true,
   settings: {
     valueAxes: true,
     timeAxis: true,
@@ -44,6 +50,14 @@ export const selectChartSettings = (state: RootState) => state[SLICE_NAME];
 export const selectIso = createSelector([selectChartSettings], (settings) => settings.iso);
 export const selectRegion = createSelector([selectChartSettings], (settings) => settings.region);
 export const selectDate = createSelector([selectChartSettings], (settings) => settings.date);
+export const selectOneWeekAverage = createSelector(
+  [selectChartSettings],
+  (settings) => settings.oneWeekAverage
+);
+export const selectTwoMonthAverage = createSelector(
+  [selectChartSettings],
+  (settings) => settings.twoMonthAverage
+);
 export const selectSettings = createSelector(
   [selectChartSettings],
   (settings) => settings.settings
@@ -67,6 +81,12 @@ const createExportSlice = (toolActions: ToolActionsType) =>
       },
       updateDate(state, action: PayloadAction<string>) {
         state.date = action.payload;
+      },
+      updateOneWeekAverage(state, action: PayloadAction<boolean>) {
+        state.oneWeekAverage = action.payload;
+      },
+      updateTwoMonthAverage(state, action: PayloadAction<boolean>) {
+        state.twoMonthAverage = action.payload;
       },
       updateSettings(state, action: PayloadAction<ChartSliceInitialState['settings']>) {
         state.settings = action.payload;

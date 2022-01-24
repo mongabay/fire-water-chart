@@ -11,11 +11,20 @@ export const Chart: React.FC<ChartProps> = ({}: ChartProps) => {
   const iso = useAppSelector(chartSelectors.selectIso);
   const region = useAppSelector(chartSelectors.selectRegion);
   const date = useAppSelector(chartSelectors.selectDate);
+  const oneWeekAverage = useAppSelector(chartSelectors.selectOneWeekAverage);
+  const twoMonthAverage = useAppSelector(chartSelectors.selectTwoMonthAverage);
   const settings = useAppSelector(chartSelectors.selectSettings);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const chartSpec = useChartSpec(iso, region, date, settings);
+  const chartSpec = useChartSpec(
+    iso,
+    region,
+    date,
+    oneWeekAverage,
+    twoMonthAverage,
+    settings
+  );
 
   useEffect(() => {
     if (containerRef.current && !chartSpec.isLoading && !chartSpec.isError && chartSpec.data) {
