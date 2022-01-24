@@ -25,6 +25,15 @@ const Sidebar = ({ exporting }) => {
 
   return (
     <aside className="c-tool-sidebar">
+      <div className="mb-5 intro">
+        <div className="title">
+          <span>Fire-Drought Data Tool</span>
+        </div>
+        <div className="mt-4 font-italic">
+          Use this tool to explore and report temporal interactions between annual precipitation and
+          fire occurrences at national and subnational scales.
+        </div>
+      </div>
       <DownloadSuccessModal open={downloadModalOpen} onClose={() => setDownloadModalOpen(false)} />
       <Accordion
         multi={false}
