@@ -37,7 +37,9 @@ export interface ChartSliceInitialState {
 export const INITIAL_STATE: ChartSliceInitialState = {
   iso: 'BRA',
   region: null,
-  date: new Date().toISOString().split('T')[0],
+  // We only have complete precipitation data until about 2 month back from the current date
+  // The milliseconds calculation remove exactly 60 days from the current date
+  date: new Date(new Date().valueOf() - 2 * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
   unit: 'Absolute',
   oneWeekAverage: true,
   twoMonthAverage: true,
