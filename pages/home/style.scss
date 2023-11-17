@@ -1,9 +1,7 @@
-.p-home {
-  width: 100vw;
-  height: 100vh;
-  padding: map-get($spacers, 5);
+@import 'css/settings';
 
-  .l-static-page {
-    height: 100%;
-  }
+.p-home {
+  width: 100%;
+  height: calc(100% - #{$header-height});
+  padding: map-get($spacers, 5);
 }
