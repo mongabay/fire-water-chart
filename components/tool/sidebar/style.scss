@@ -7,10 +7,18 @@
   margin-right: map-get($spacers, 5);
 
   .intro {
-    .title h1 {
+    .title {
+      padding: map-get($spacers, 2) map-get($spacers, 3) 0 map-get($spacers, 3);
       font-family: $font-family-2;
-      font-weight: $font-weight-bold;
       @include font-size($font-size-l);
+      color: $white;
+
+      span {
+        padding: map-get($spacers, 2) 0;
+        background: $primary;
+        box-shadow: map-get($spacers, 3) 0 0 $primary, #{-1 * map-get($spacers, 3)} 0 0 $primary;
+        box-decoration-break: clone;
+      }
     }
   }
 
@@ -19,10 +27,6 @@
     flex-direction: column;
     flex-grow: 1;
     overflow: hidden;
-    .subtitle {
-      font-family: $font-family-2;
-      @include font-size($font-size-l);
-    }
 
     .item {
       margin: map-get($spacers, 2) 0;

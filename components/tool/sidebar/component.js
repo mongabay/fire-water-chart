@@ -27,7 +27,7 @@ const Sidebar = ({ exporting }) => {
     <aside className="c-tool-sidebar">
       <div className="mb-5 intro">
         <div className="title">
-          <h1>Fire-Drought Data Tool</h1>
+          <span>Fire-Drought Data Tool</span>
         </div>
         <div className="mt-4">
           Use this tool to explore and report temporal interactions between annual precipitation and
@@ -45,7 +45,7 @@ const Sidebar = ({ exporting }) => {
           className={expandedAccordion === 'data-layer' ? '-expanded' : null}
         >
           <AccordionTitle aria-level={1}>
-            <span className="subtitle">Data layers</span>
+            <span className="h1">Data layer</span>
           </AccordionTitle>
           <AccordionPanel>
             <DataLayerSettings />
