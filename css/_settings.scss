@@ -5,9 +5,9 @@
 
 // Colors
 
-$primary: #03755e;
+$primary: #a01200;
 $light: $white;
-$yellow: #F1BA30;
+$yellow: #f1ba30;
 
 $text-color-1: #222222;
 $text-color-2: $primary;
@@ -36,6 +36,7 @@ $font-family-base: $font-family-1;
 
 $font-size-l: rem(30);
 $font-size-base: rem(16);
+$font-size-medium: rem(14);
 $font-size-s: rem(13);
 $font-size-xs: rem(12);
 $font-size-xxs: rem(10);
@@ -43,6 +44,7 @@ $font-size-xxs: rem(10);
 $headings-font-family: $font-family-2;
 $h1-font-size: $font-size-l;
 
+$font-weight-strong: 600;
 // $mark-padding: 0 0.2rem;
 // $mark-bg: #fac080;
 
@@ -113,3 +115,5 @@ $progress-height: rem(12);
 
 $enable-shadows: true;
 $enable-responsive-font-sizes: true;
+
+$header-height: 45px;

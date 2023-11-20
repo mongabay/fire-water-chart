@@ -4,12 +4,16 @@ import Head from 'next/head';
 
 const HeadComponent = ({ title, description }) => (
   <Head>
-    <title key="title">{title ? `${title} | Fire tool` : 'Fire tool'}</title>
+    <title key="title">
+      {title ? `${title} | Fire-Drought Data Tool` : 'Fire-Drought Data Tool'}
+    </title>
     <meta
       key="description"
       name="description"
       content={
-        description ? description : 'Tool to generate fire and precipitation charts for Mongabay.'
+        description
+          ? description
+          : 'Use this tool to explore and report temporal interactions between annual precipitation and fire occurrences at national and subnational scales.'
       }
     />
   </Head>

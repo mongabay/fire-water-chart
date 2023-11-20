@@ -4,20 +4,14 @@ import classNames from 'classnames';
 
 import Head from 'components/head';
 import Icons from 'components/icons';
+import Header from 'components/header';
 
 const StaticPage = ({ className, children }) => (
-  <div className={classNames('l-simple-page', className)}>
+  <div>
     <Head />
     <main className="l-static-page">
-      <div className="logo">
-        <img // eslint-disable-line @next/next/no-img-element
-          src={`${process.env.BASE_PATH ?? ''}/images/mongabay-horizontal.jpg`}
-          alt="Mongabay"
-          width={135}
-          height={20}
-        />
-      </div>
-      {children}
+      <Header />
+      <div className={classNames('l-simple-page', className)}>{children}</div>
     </main>
     <Icons />
   </div>
