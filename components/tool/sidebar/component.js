@@ -27,7 +27,7 @@ const Sidebar = ({ exporting }) => {
     <aside className="c-tool-sidebar">
       <div className="mb-5 intro">
         <div className="title">
-          <h1>Fire-Drought Data Tool</h1>
+          <h1>Fire Weather Almanac</h1>
         </div>
         <div className="mt-4">
           Use this tool to explore and report temporal interactions between annual precipitation and

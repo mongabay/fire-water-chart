@@ -13,7 +13,7 @@ const Header = () => {
           />
         </div>
         <div className="header__content">
-          <p>SATELLITE TOOL</p>
+          <p className="header__content__name">Fire Weather Almanac</p>
           <HeaderMenu />
         </div>
       </div>

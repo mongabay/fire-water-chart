@@ -1,9 +1,9 @@
-# fire-water-chart
+# Fire Weather Almanac
 
-Fire water chart is tool that generates fire and precipitation chart images for Mongabay's articles.
+Use this tool to explore and report temporal interactions between annual precipitation and fire occurrences at national and subnational scales.
 
 <p align="center">
-  <img src="docs/assets/hero.jpg" alt="Fire water chart" />
+  <img src="docs/assets/hero.png" alt="Fire Weather Almanac" />
 </p>
 
 ## Getting Started

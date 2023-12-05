@@ -4,9 +4,7 @@ import Head from 'next/head';
 
 const HeadComponent = ({ title, description }) => (
   <Head>
-    <title key="title">
-      {title ? `${title} | Fire-Drought Data Tool` : 'Fire-Drought Data Tool'}
-    </title>
+    <title key="title">{title ? `${title} | Fire Weather Almanac` : 'Fire Weather Almanac'}</title>
     <meta
       key="description"
       name="description"
