@@ -8,9 +8,10 @@
 
   .intro {
     .title h1 {
-      font-family: $font-family-2;
-      font-weight: $font-weight-bold;
-      @include font-size($font-size-l);
+      line-height: 3rem;
+      font-weight: 300;
+      font-family: $font-family-1;
+      font-size: 44px;
     }
   }
 
@@ -21,13 +22,16 @@
     overflow: hidden;
     .subtitle {
       font-family: $font-family-2;
-      @include font-size($font-size-l);
+      font-size: 28px;
     }
 
     .item {
       margin: map-get($spacers, 2) 0;
       overflow: hidden;
       flex-shrink: 0;
+      h2 {
+        font-size: 12px;
+      }
 
       &:first-child {
         margin-top: 0;
@@ -49,5 +53,11 @@
         }
       }
     }
+  }
+
+  .btn {
+    padding: 12px 32px;
+    width: 176.5px;
+    border-radius: 80px;
   }
 }
