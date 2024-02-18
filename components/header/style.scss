@@ -25,11 +25,6 @@
       font-size: $font-size-xs;
       font-weight: $font-weight-strong;
       letter-spacing: 0.96px;
-      text-transform: uppercase;
-    }
-
-    &__name {
-      text-transform: uppercase;
     }
   }
   &__menu {
@@ -38,6 +33,7 @@
       width: 21px;
       height: 21px;
       transform: translateY(-1px);
+      transform: scale(0.9);
     }
     &__content {
       position: fixed;
@@ -45,7 +41,7 @@
       top: 0;
       right: 0;
       height: 100%;
-      z-index: 3;
+      z-index: 30;
       transition: all 300ms ease-in-out;
       background-color: white;
       display: flex;
@@ -72,14 +68,20 @@
           right: 2rem;
           top: 10px;
           &__icon.c-icon {
-            stroke: $text-color-1;
+            stroke: black;
             width: 51px;
             height: 51px;
+            transform: scale(0.8);
             stroke-width: 0px;
           }
         }
         &__title {
-          font: $font-weight-bold $font-size-l $font-family-2;
+          color: var(--Black-500, #000);
+          font-family: 'Open Sans';
+          font-size: 44px;
+          font-style: normal;
+          font-weight: 300;
+          line-height: 56px;
         }
         ul {
           display: flex;
@@ -92,12 +94,17 @@
               display: flex;
               align-items: center;
               gap: 16px;
-              font: $font-weight-strong $font-size-medium $font-family-1;
-              text-transform: uppercase;
+              font-family: $font-family-1;
+              font-size: 24px;
+              font-style: normal;
+              font-weight: 300;
+              line-height: 32px;
+
               color: $text-color-1;
               border-radius: 22px;
               &:hover {
                 text-decoration: underline;
+                text-decoration-thickness: 1px;
               }
               &:focus-visible {
                 outline: $primary auto 1px;
@@ -128,6 +135,14 @@
           align-items: flex-end;
           gap: 12px;
           font: $font-weight-strong $font-size-s $font-family-1;
+          a {
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            padding: 12px 32px;
+            background-color: black;
+            border-radius: 80px;
+          }
         }
       }
     }

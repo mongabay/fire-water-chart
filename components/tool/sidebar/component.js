@@ -30,8 +30,8 @@ const Sidebar = ({ exporting }) => {
           <h1>Fire Weather Almanac</h1>
         </div>
         <div className="mt-4">
-          Use this tool to explore and report temporal interactions between annual precipitation and
-          fire occurrences at national and subnational scales.
+          Find shared stories of climate impact. Reveal and compare annual cycles of fire on land
+          and water in the atmosphere at different scales.
         </div>
       </div>
       <DownloadSuccessModal open={downloadModalOpen} onClose={() => setDownloadModalOpen(false)} />
